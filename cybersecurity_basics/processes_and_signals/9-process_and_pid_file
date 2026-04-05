@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This script handles SIGTERM, SIGINT and SIGQUIT signals
+
+# PID-ni /tmp/myscript.pid faylına yazırıq
+echo $$ > /tmp/myscript.pid
+
+# SIGINT (Ctrl+C) siqnalını tutmaq üçün
+trap "echo 'Y U no love me?!'" SIGINT
+
+# SIGTERM (pkill) siqnalını tutmaq üçün
+trap "echo 'I hate the kill command'; rm /tmp/myscript.pid; exit" SIGTERM
+
+# SIGQUIT (Ctrl+\) siqnalını tutmaq üçün (və ya SIGTERM ilə eyni təmizləmə)
+trap "rm /tmp/myscript.pid; exit" SIGQUIT
+
+# Sonsuz dövr
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
